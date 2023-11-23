@@ -1,19 +1,32 @@
 const express = require('express')
+const path = require('path')
+const ejs = require('ejs')
 require('dotenv').config()
 const app = express()
 const server = require('http').createServer(app)
 
 const PORT = process.env.PORT || 5000
+const publicDir = path.join(__dirname,'./public')
 
-app.listen(PORT, () => {
+console.log(publicDir)
+app.set('view engine','ejs')
+
+app.use(express.static(publicDir))
+app.use(express.json)
+app.use(express.urlencoded({ extended: false }));
+
+
+server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
 })
 
-app.use(express.static(__dirname + '/public'))
-
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
+    res.render('login')
 })
+
+app.get("/signup", (req, res) => {
+    res.render("signup");
+});
 
 // Socket 
 const io = require('socket.io')(server)
