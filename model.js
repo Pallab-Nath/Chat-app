@@ -22,6 +22,6 @@ const Loginschema =  new mongoose.Schema({
 });
 
 // collection part
-const user = new mongoose.model("users", Loginschema);
+const user = new mongoose.model("user", Loginschema);
 
 module.exports = user;
